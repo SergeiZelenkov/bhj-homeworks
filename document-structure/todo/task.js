@@ -10,22 +10,21 @@ tasksAdd.addEventListener("click", (e) => {
     return;
   }
 
-  const taskHTML = `<div class="task">
-  <div class="task__title">
-    ${taskText}
-  </div>
-  <a href="#" class="task__remove">&times;</a>
-</div>`;
+  const task = document.createElement("div");
+  task.classList.add("task");
+  task.innerHTML = `
+    <div class="task__title">${taskText}</div>
+    <a href="#" class="task__remove">&times;</a>
+  `;
 
-  tasksList.insertAdjacentHTML("afterBegin", taskHTML);
+  tasksList.insertAdjacentElement("afterBegin", task);
+
+
+  const removeButton = task.querySelector(".task__remove");
+  removeButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    task.remove(); 
+  });
 
   taskInput.value = "";
-
-  const removeButtons = tasksList.querySelectorAll(".task__remove");
-  removeButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      button.closest(".task").remove();
-    });
-  });
 });

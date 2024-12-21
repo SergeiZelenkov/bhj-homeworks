@@ -19,10 +19,14 @@ products.forEach((product) => {
     }
   });
   productQuantityInc.addEventListener("click", () => {
-    productValue.textContent++;
+      productValue.textContent++;   
   });
   //add
   productAdd.addEventListener("click", () => {
+    if (productValue.textContent < 1) {
+      return;
+    }
+    
     const quantity = productValue.textContent;
     const cartProduct = document.querySelector(
       `.cart__product[data-id="${product.dataset.id}"]`
