@@ -1,30 +1,27 @@
-const hasTooltips = [...document.getElementsByClassName("has-tooltip")];
+//V3
+const hasTooltips = [...document.querySelectorAll(".has-tooltip")];
 
-hasTooltips.forEach((tooltip) => {
-  tooltip.addEventListener("click", (e) => {
+hasTooltips.forEach((hasTooltip) => {
+  hasTooltip.addEventListener("click", (e) => {
     e.preventDefault();
 
-    document.querySelectorAll(".tooltip_active").forEach((activeTooltip) => {
-      activeTooltip.classList.remove("tooltip_active");
-    });
-
-    let activeTooltip = tooltip.querySelector(".tooltip");
-    if (activeTooltip) {
-      activeTooltip.classList.toggle("tooltip_active");
+    const existingTooltip = document.querySelector(".tooltip_active");
+    if (existingTooltip) {
+      existingTooltip.remove();
       return;
     }
-    const divHTML = document.createElement("div");
-    divHTML.className = "tooltip";
-    divHTML.innerHTML = tooltip.textContent;
-    tooltip.append(divHTML);
 
-    activeTooltip = tooltip.querySelector(".tooltip");
+    const tooltip = document.createElement("div");
+    tooltip.className = "tooltip";
+    tooltip.innerHTML = hasTooltip.title;
+    tooltip.cssText = "left: 0; top: 0";
 
-    const rect = tooltip.getBoundingClientRect();
-    activeTooltip.style.left = `${rect.left}px`;
-    activeTooltip.style.top = `${rect.bottom}px`;
+    const rect = hasTooltip.getBoundingClientRect();
+    tooltip.style.left = `${rect.left}px`;
+    tooltip.style.top = `${rect.bottom}px`;
 
-    activeTooltip.classList.add("tooltip_active");
+    tooltip.classList.add("tooltip_active");
+    document.body.append(tooltip);
   });
 });
 
